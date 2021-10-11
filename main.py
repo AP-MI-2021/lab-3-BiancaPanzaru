@@ -80,10 +80,8 @@ def toateNrcuacelasiNrdiv(list):
 
 def test_toateNrcuacelasiNrdiv():
     assert toateNrcuacelasiNrdiv([2,3,5,7]) is True
-
     assert toateNrcuacelasiNrdiv([6,2,8]) is False
     assert toateNrcuacelasiNrdiv([10,4]) is False
-
 
 def get_longest_same_div_count(lst: list[int]) -> list[int]:
     '''
@@ -102,10 +100,45 @@ def test_get_longest_same_div_count():
   assert get_longest_same_div_count([16,20,12,7]) == [20,12]
   assert get_longest_same_div_count([16,11,13,15]) == [11,13]
 
+def all_is_not_prime(l):
+    '''
+    determina daca toate numerele dintr-o lista nu sunt prime
+    :param l: lista cu numere intregi
+    :return: True, daca toate numerele sunt neprime, iar False in caz contrar
+    '''
+    for x in l:
+        if is_Prime(x) is True :
+            return False
+    return True
+
+def test_all_is_not_prime():
+    assert all_is_not_prime([4,6,8,6,9]) is True
+    assert all_is_not_prime([10,15,7]) is False
+    assert all_is_not_prime([2,3,5]) is False
+
+def get_longest_all_not_prime(lst: list[int]) -> list[int]:
+    '''
+    determina cea mai lunga subsecventa de numere neprime din lista
+    :param lst: lista cu nr intregi
+    :return: cea mai lunga subsecventa care respecta proprietatea din lst
+    '''
+    subsecventaMax = []
+    for i in range(len(lst)):
+        for j in range(i, len(lst)):
+            if all_is_not_prime(lst[i:j + 1]) and len(lst[i:j + 1]) > len(subsecventaMax):
+                subsecventaMax = lst[i:j + 1]
+    return subsecventaMax
+
+def test_get_longest_all_not_prime():
+   assert get_longest_all_not_prime([4,6,2,4,3,10,12,15,7]) == [10,12,15]
+   assert get_longest_all_not_prime([2,5,7]) == []
+   assert get_longest_all_not_prime([20,30,4,5,6,8]) == [20,30,4]
+
 def printMenu():
     print("1. Citire lista")
     print("2. Afisare cea mai lunga subsecventa in care toate numerele sunt prime")
     print("12. Afisare cea mai lunga subsecventa in care toate numerele au acelasi numri de divizori")
+    print("7. Afisare cea mai lunga subsecventa de numere neprime.")
     print("x. Iesire")
 
 def citireLista():
@@ -127,6 +160,8 @@ def main():
            print(get_longest_all_primes(l))
         elif optiune == "12":
             print(get_longest_same_div_count(l))
+        elif optiune == "7":
+            print(get_longest_all_not_prime(l))
         elif optiune == "x":
             break
         else:
@@ -139,4 +174,6 @@ if __name__ == "__main__":
     test_nrdiv()
     test_toateNrcuacelasiNrdiv()
     test_get_longest_same_div_count()
+    test_all_is_not_prime()
+    test_get_longest_all_not_prime()
     main()
